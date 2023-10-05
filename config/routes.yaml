@@ -3,3 +3,13 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+ModuleOne:
+    resource: .
+    type: module_one
+    host: 'domain1.test.com'
+
+ModuleTwo:
+    resource: .
+    type: module_two
+    host: 'domain2.test.com'
