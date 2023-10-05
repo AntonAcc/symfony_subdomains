@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Entity\ModuleRoute;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
@@ -12,13 +13,14 @@ class Kernel extends BaseKernel
 
     protected function configureRoutes(RoutingConfigurator $routes): void
     {
-        $routeList = [
-            ['module_one', 'domain1.test.com'],
-            ['module_two', 'domain2.test.com'],
-        ];
+        $em = $this->container->get('doctrine.orm.default_entity_manager');
+        $repository = $em->getRepository(ModuleRoute::class);
+        $moduleRouteList = $repository->findAll();
+
         $resource = '.';
-        foreach ($routeList as [$type, $host]) {
-            $routes->import($resource, $type)->host($host);
+        /** @var ModuleRoute $moduleRoute */
+        foreach ($moduleRouteList as $moduleRoute) {
+            $routes->import($resource, $moduleRoute->getRouteType())->host($moduleRoute->getHost());
         }
     }
 }

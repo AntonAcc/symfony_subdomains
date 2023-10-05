@@ -40,6 +40,12 @@ RUN set -eux; \
 		zip \
     ;
 
+RUN set -eux; \
+    install-php-extensions \
+        pdo \
+        pdo_mysql \
+    ;
+
 ###> recipes ###
 ###< recipes ###
 
